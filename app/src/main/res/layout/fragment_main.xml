@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".MainFrag">
+
+    <!-- TODO: Update blank fragment layout -->
+    --> <TextView
+    android:id="@+id/loginscrn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="Login"
+    android:textSize="25dp"
+    android:gravity="center"
+    android:textStyle="bold"
+    />
+
+    <EditText
+        android:layout_below="@+id/loginscrn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:id="@+id/etUName"
+        />
+
+        <EditText
+            android:layout_below="@+id/etUName"
+            android:hint="Password"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etPassword"
+            />
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:id="@+id/btnLogin"
+        android:layout_below="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:text="Sign In" />
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNew"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="Or new user?"
+        android:layout_below="@id/btnLogin"
+        />
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:id="@+id/btnRegister"
+        android:layout_below="@+id/txtNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:text="Sign Up" />
+
+</RelativeLayout>
