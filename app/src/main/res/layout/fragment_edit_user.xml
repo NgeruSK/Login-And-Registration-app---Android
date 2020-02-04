@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditUser">
+    android:orientation="vertical"
+    android:minHeight="450dp"
+    android:minWidth="500dp"
+    android:background="@drawable/bg_update"
+    android:layout_centerInParent="true"
+    tools:context=".fragments.EditUser">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imgHolder"
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/person_icon" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/etNameHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgHolder"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/edit_round"
+        android:ems="8"/>
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/etCityHolder"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/etNameHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_round"
+        android:ems="8"
+        />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnUpdate"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/etCityHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_round"
+        android:text="Update" />
+
+</RelativeLayout>

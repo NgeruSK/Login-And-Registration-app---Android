@@ -1,4 +1,4 @@
-package com.example.demojava;
+package com.example.demojava.fragments;
 
 
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.demojava.databases.DatabaseHandler;
+import com.example.demojava.R;
 
 
 /**
@@ -53,19 +56,17 @@ public class RegisterFrag extends Fragment {
         _etPassword=view.findViewById(R.id.etPass1);
         _etPassword1=view.findViewById(R.id.etPass2);
 
-
-
         myDb=new DatabaseHandler(getContext());
 
         _btnsignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 _name=_etName.getText().toString().trim();
                 _email=_etEmail.getText().toString().trim();
                 _city=_etCity.getText().toString().trim();
                 _password=_etPassword.getText().toString().trim();
                 _password1=_etPassword1.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 if(TextUtils.isEmpty(_name) || TextUtils.isEmpty(_email) || TextUtils.isEmpty(_city) || TextUtils.isEmpty(_password) || TextUtils.isEmpty(_password1))
                 {
@@ -78,9 +79,24 @@ public class RegisterFrag extends Fragment {
                         Toast.makeText(getContext(), "Passwords must be the same",Toast.LENGTH_LONG).show();
                     }
                     else
-                    {
-                        myDb.insertData(_name, _email, _city, _password);
-                        Toast.makeText(getContext(),"User Successfuly added",Toast.LENGTH_LONG).show();
+                        if (!_email.matches(emailPattern))
+                        {
+                            Toast.makeText(getContext(), "Enter a valid E-Mail format", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            {
+                        if(myDb.searchEmail(_email))
+                        {
+                            Toast.makeText(getContext(), "Email Exists. Try using another one", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            if (myDb.insertData(_name, _email, _city, _password)) {
+                                Toast.makeText(getContext(), "User Successfuly added", Toast.LENGTH_LONG).show();
+                                ClearFields();
+                            } else {
+                                Toast.makeText(getContext(), "User could not be added", Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
                 }
 
@@ -88,5 +104,11 @@ public class RegisterFrag extends Fragment {
         });
         return view;
     }
-
+        public void ClearFields(){
+        _etPassword1.setText("");
+        _etPassword.setText("");
+        _etCity.setText("");
+        _etEmail.setText("");
+        _etName.setText("");
+}
 }
