@@ -151,6 +151,16 @@ public class DataActivity extends AppCompatActivity {
                 JSONObject orgObject=null;
                 JSONObject contributorObject=null;
 
+                //get contributors
+                for(int i=0;i<myContributors.length();i++)
+                {
+                    contributorObject=myContributors.getJSONObject(i);
+                    String id=contributorObject.getString("Id");
+                    String contributor=contributorObject.getString("Name");
+                    int cId=Integer.valueOf(id);
+                    dbHelper.insert_contributors(cId,contributor);
+                }
+
                 //get countries
                 for(int i=0;i<myCountries.length();i++)
                 {
@@ -194,15 +204,7 @@ public class DataActivity extends AppCompatActivity {
                     int oId=Integer.valueOf(id);
                     dbHelper.insert_organisations(oId,organisation);
                 }
-                //get contributors
-                for(int i=0;i<myContributors.length();i++)
-                {
-                    contributorObject=myContributors.getJSONObject(i);
-                    String id=contributorObject.getString("Id");
-                    String contributor=contributorObject.getString("Name");
-                    int cId=Integer.valueOf(id);
-                    dbHelper.insert_contributors(cId,contributor);
-                }
+
 
               //  JSONObject
                // Log.e("PULL_GLOBALS POST RX =>", " " + data);

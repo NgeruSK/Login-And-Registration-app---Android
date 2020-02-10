@@ -57,6 +57,7 @@ public class PicsFragment extends Fragment {
     DatabaseHelper myDb;
     private static final String IMAGE_DIRECTORY = "/DemoPics";
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    String surname,othername, idno, dob, country, gender, organisation, contributor, insurance;
 
 
     public PicsFragment() {
@@ -77,6 +78,18 @@ public class PicsFragment extends Fragment {
         img_front=view.findViewById(R.id.imgFrontID);
         img_back=view.findViewById(R.id.imgBackID);
         btnPrev=view.findViewById(R.id.btnPreview);
+
+        Bundle bundle=getArguments();
+        surname=bundle.getString("ksurname");
+        othername=bundle.getString("konames");
+        idno=bundle.getString("kid");
+        dob=bundle.getString("kdob");
+        country=bundle.getString("kcountry");
+        gender= bundle.getString("kgender");
+        organisation=bundle.getString("korg");
+        contributor=bundle.getString("kcont");
+        insurance=bundle.getString("kins");
+
 
         int perrmAcc=ActivityCompat.checkSelfPermission(getContext(), CAMERA);
         if(perrmAcc!=PackageManager.PERMISSION_GRANTED)
@@ -255,8 +268,21 @@ public class PicsFragment extends Fragment {
     }
     public void loadPreview()
     {
+        Bundle bundle = new Bundle();
+        bundle.putString("ksurname",surname);
+        bundle.putString("konames",othername);
+        bundle.putString("kid",idno);
+        bundle.putString("kdob",dob);
+        bundle.putString("kcountry",country);
+        bundle.putString("kgender",gender);
+        bundle.putString("korg",organisation);
+        bundle.putString("kcont",contributor);
+        bundle.putString("kins",insurance);
+
+
         FragmentTransaction ft=getFragmentManager().beginTransaction();
         PreviewFragment pf=new PreviewFragment();
+        pf.setArguments(bundle);
         ft.replace(R.id.RegistrationContainer,pf);
         ft.addToBackStack(null);
         ft.commit();

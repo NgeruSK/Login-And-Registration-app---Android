@@ -35,10 +35,7 @@ public class NamesFragment extends Fragment {
     Calendar cal;
     DatePickerDialog dp;
 
-    String surname;
-    String othername;
-    String idno;
-    String dob;
+    String surname,othername, idno, dob;
     DatabaseHelper dbh;
 
     public NamesFragment() {
@@ -68,9 +65,16 @@ public class NamesFragment extends Fragment {
 
                /* int id=Integer.valueOf(et_id.getText().toString());
                 dbh.insert_countries(id,surname);*/
+               Bundle bundle = new Bundle();
+               bundle.putString("ksurname",surname);
+               bundle.putString("konames",othername);
+               bundle.putString("kid",idno);
+               bundle.putString("kdob",dob);
+
 
                 FragmentTransaction ft=getFragmentManager().beginTransaction();
                 SpinnersFragment Sf = new SpinnersFragment();
+                Sf.setArguments(bundle);
                 ft.replace(R.id.RegistrationContainer,Sf);
                 ft.addToBackStack(null);
                 ft.commit();

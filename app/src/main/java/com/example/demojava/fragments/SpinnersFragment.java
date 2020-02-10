@@ -26,11 +26,10 @@ public class SpinnersFragment extends Fragment {
 
     Button btnNextSp;
     DatabaseHelper dbHelper;
-    Spinner spCountries;
-    Spinner spGender;
-    Spinner spOrganisations;
-    Spinner spContributors;
-    Spinner spInsurance;
+    Spinner spCountries, spGender, spOrganisations, spContributors, spInsurance;
+    String surname,othername, idno, dob, country, gender, organisation, contributor, insurance;
+
+
     public SpinnersFragment() {
         // Required empty public constructor
     }
@@ -48,6 +47,13 @@ public class SpinnersFragment extends Fragment {
         spInsurance=view.findViewById(R.id.sp_insurance);
         btnNextSp=view.findViewById(R.id.btnNextSp);
 
+        Bundle bundle=getArguments();
+        surname=bundle.getString("ksurname");
+        othername=bundle.getString("konames");
+        idno=bundle.getString("kid");
+        dob=bundle.getString("kdob");
+
+
         loadCountriesData();
         loadGenderData();
         loadOrgData();
@@ -57,9 +63,29 @@ public class SpinnersFragment extends Fragment {
         btnNextSp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                country=spCountries.getSelectedItem().toString();
+                gender=spGender.getSelectedItem().toString();
+                organisation=spOrganisations.getSelectedItem().toString();
+                contributor="Sample";
+                //contributor=spCountries.getSelectedItem().toString();
+                insurance=spInsurance.getSelectedItem().toString();
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("ksurname",surname);
+                bundle.putString("konames",othername);
+                bundle.putString("kid",idno);
+                bundle.putString("kdob",dob);
+                bundle.putString("kcountry",country);
+                bundle.putString("kgender",gender);
+                bundle.putString("korg",organisation);
+                bundle.putString("kcont",contributor);
+                bundle.putString("kins",insurance);
+
                 FragmentTransaction ft=getFragmentManager().beginTransaction();
-                PicsFragment Pf = new PicsFragment();
-                ft.replace(R.id.RegistrationContainer,Pf);
+                PicsFragment pF = new PicsFragment();
+                pF.setArguments(bundle);
+                ft.replace(R.id.RegistrationContainer,pF);
                 ft.addToBackStack(null);
                 ft.commit();
             }
