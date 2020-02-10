@@ -25,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public DatabaseHandler(Context context)
     {
         super(context,DATABASE_NAME,null,1);
-        SQLiteDatabase db=this.getWritableDatabase();
+       // SQLiteDatabase db=this.getWritableDatabase();
     }
 
 

@@ -1,14 +1,20 @@
 package com.example.demojava.fragments;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +33,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.demojava.activities.DataActivity;
+import com.example.demojava.activities.RegisterActivity;
 import com.example.demojava.databases.DatabaseHandler;
 import com.example.demojava.databases.DatabaseHandler2;
 import com.example.demojava.R;
@@ -42,11 +49,16 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFrag extends Fragment {
+    private static final int PERMISSION_REQUEST_CODE = 200;
     Toolbar toolbar;
     Button _btnRegister;
     Button _btnLogin;
@@ -79,7 +91,7 @@ public class MainFrag extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view=inflater.inflate(R.layout.fragment_main,container,false);
-
+       // checkPermission();
         _txtRegister=view.findViewById(R.id.txtReg);
         _btnLogin=view.findViewById(R.id.btnLogin);
         _etPassword=view.findViewById(R.id.etPassword);
@@ -99,14 +111,18 @@ public class MainFrag extends Fragment {
         {
             Toast.makeText(getContext(),"Login to use the app",Toast.LENGTH_SHORT).show();
         }
+
         _txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               FragmentTransaction ft=getFragmentManager().beginTransaction();
+
+                Intent intent = new Intent(getContext(), RegisterActivity.class);
+                startActivity(intent);
+              /* FragmentTransaction ft=getFragmentManager().beginTransaction();
                RegisterFrag Rf = new RegisterFrag();
                ft.replace(R.id.fragmentContainer,Rf);
                ft.addToBackStack(null);
-               ft.commit();
+               ft.commit();*/
             }
         });
         _btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -334,7 +350,63 @@ catch (Exception e)
                     // Toast.makeText(getContext(),"Unchecked",Toast.LENGTH_SHORT).show();
                 }
     }
+    //permissions
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION);
+        int result1 = ContextCompat.checkSelfPermission(getContext(), CAMERA);
+        int result3 = ContextCompat.checkSelfPermission(getContext(), WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED  && result3 == PackageManager.PERMISSION_GRANTED;
+    }
 
+    private void requestPermission() {
 
+        ActivityCompat.requestPermissions(getActivity(), new String[]{ACCESS_FINE_LOCATION, CAMERA, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (locationAccepted && cameraAccepted)
+                        Toast.makeText(getContext(),"Permission Granted",Toast.LENGTH_LONG).show();
+                    else {
+
+                        Toast.makeText(getContext(),"Permission Denied, Now you cannot access camera with this app",Toast.LENGTH_LONG).show();
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
+                                showMessageOKCancel("You need to allow access to both the permissions",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{ACCESS_FINE_LOCATION, CAMERA},
+                                                            PERMISSION_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                return;
+                            }
+                        }
+
+                    }
+                }
+                break;
+        }
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getContext())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
 
 }

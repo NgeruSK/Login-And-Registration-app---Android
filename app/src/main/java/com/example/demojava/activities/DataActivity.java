@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.demojava.R;
 import com.example.demojava.adapters.demo_adpt;
+import com.example.demojava.databases.DatabaseHelper;
 import com.example.demojava.models.dynamic_property;
 import com.google.common.io.ByteStreams;
 
@@ -43,6 +44,7 @@ public class DataActivity extends AppCompatActivity {
     static String token;
     static HttpURLConnection urlConnection = null;
     GridView gridView;
+    DatabaseHelper dbHelper;
     ArrayList<dynamic_property> countries=new ArrayList<>();
     Activity act;
     @Override
@@ -50,6 +52,7 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
         act=this;
+        dbHelper=new DatabaseHelper(this);
         SharedPreferences preferences = this.getSharedPreferences("checkbox", Context.MODE_PRIVATE);
         token = preferences.getString("token", "");
         //dP=new dynamic_property();
@@ -96,7 +99,7 @@ public class DataActivity extends AppCompatActivity {
         protected void onPreExecute() {
             //super.onPreExecute();
             pD=new ProgressDialog(DataActivity.this);
-            pD.setMessage("Fetching countries");
+            pD.setMessage("Synchronizing........");
             pD.setCancelable(false);
             pD.setIndeterminate(false);
             pD.show();
@@ -138,21 +141,68 @@ public class DataActivity extends AppCompatActivity {
                 JSONObject AllData = new JSONObject(data);
                 JSONObject myResult= AllData.getJSONObject("Result");
                 JSONArray myCountries=myResult.getJSONArray("CountriesList");
-                JSONObject chosenCountry=null;
+                JSONArray myGenders=myResult.getJSONArray("GenderList");
+                JSONArray myInsurances=myResult.getJSONArray("InsuranceTypeList");
+                JSONArray myOrganisations=myResult.getJSONArray("EmployerOrganList");
+                JSONArray myContributors=myResult.getJSONArray("ContributionPayersList");
+                JSONObject countryObject=null;
+                JSONObject genderObject=null;
+                JSONObject insuranceObject=null;
+                JSONObject orgObject=null;
+                JSONObject contributorObject=null;
+
+                //get countries
                 for(int i=0;i<myCountries.length();i++)
                 {
-                    chosenCountry=myCountries.getJSONObject(i);
-                    String id=chosenCountry.getString("Id");
-                    String Country=chosenCountry.getString("Country");
-                    String Code=chosenCountry.getString("Code");
-
-                    dynamic_property temp_pr=new dynamic_property();
+                    countryObject=myCountries.getJSONObject(i);
+                    String id=countryObject.getString("Id");
+                    String Country=countryObject.getString("Country");
+                    int hid=Integer.valueOf(id);
+                    dbHelper.insert_countries(hid,Country);
+                   /* dynamic_property temp_pr=new dynamic_property();
                     temp_pr.setId(id);
                     temp_pr.setName(Country);
                     temp_pr.setCode(Code);
-                    countries.add(temp_pr);
+                    countries.add(temp_pr);*/
                 }
 
+                //get genders
+                for(int i=0;i<myGenders.length();i++)
+                {
+                    genderObject=myGenders.getJSONObject(i);
+                    String id=genderObject.getString("Id");
+                    String gender=genderObject.getString("GenderName");
+                    int gId=Integer.valueOf(id);
+                    dbHelper.insert_gender(gId,gender);
+                }
+                //get insurance types
+                for(int i=0;i<myInsurances.length();i++)
+                {
+                    insuranceObject=myInsurances.getJSONObject(i);
+                    String id=insuranceObject.getString("Id");
+                    String insurance=insuranceObject.getString("Type");
+                    int iId=Integer.valueOf(id);
+                    dbHelper.insert_insurances(iId,insurance);
+                }
+
+                //get organisations
+                for(int i=0;i<myOrganisations.length();i++)
+                {
+                    orgObject=myOrganisations.getJSONObject(i);
+                    String id=orgObject.getString("Id");
+                    String organisation=orgObject.getString("Name");
+                    int oId=Integer.valueOf(id);
+                    dbHelper.insert_organisations(oId,organisation);
+                }
+                //get contributors
+                for(int i=0;i<myContributors.length();i++)
+                {
+                    contributorObject=myContributors.getJSONObject(i);
+                    String id=contributorObject.getString("Id");
+                    String contributor=contributorObject.getString("Name");
+                    int cId=Integer.valueOf(id);
+                    dbHelper.insert_contributors(cId,contributor);
+                }
 
               //  JSONObject
                // Log.e("PULL_GLOBALS POST RX =>", " " + data);
