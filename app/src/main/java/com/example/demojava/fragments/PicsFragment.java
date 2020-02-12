@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,8 @@ public class PicsFragment extends Fragment {
     private static final int PERMISSION_REQUEST_CODE = 200;
     ImageView img_prof, img_front, img_back;
     Button btnPrev;
+    Bitmap thumbnail1, thumbnail2, thumbnail3;
+    String profpic, idfront, idback;
     private Uri fileUri;
     String picturePath, base64_image;
     DatabaseHelper myDb;
@@ -217,21 +220,24 @@ public class PicsFragment extends Fragment {
         {
             if (requestCode == 100)
             {
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                img_prof.setImageBitmap(thumbnail);
-                saveImage(thumbnail);
+                thumbnail1 = (Bitmap) data.getExtras().get("data");
+                img_prof.setImageBitmap(thumbnail1);
+                saveImage(thumbnail1);
+                profpic=BitMapToString(thumbnail1);
             }
             if (requestCode == 200)
             {
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                img_front.setImageBitmap(thumbnail);
-                saveImage(thumbnail);
+                thumbnail2 = (Bitmap) data.getExtras().get("data");
+                img_front.setImageBitmap(thumbnail2);
+                saveImage(thumbnail2);
+                idfront=BitMapToString(thumbnail2);
             }
             if (requestCode == 300)
             {
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                img_back.setImageBitmap(thumbnail);
-                saveImage(thumbnail);
+                thumbnail3 = (Bitmap) data.getExtras().get("data");
+                img_back.setImageBitmap(thumbnail3);
+                saveImage(thumbnail3);
+                idback=BitMapToString(thumbnail3);
             }
         }
     }
@@ -266,6 +272,16 @@ public class PicsFragment extends Fragment {
         }
         return "";
     }
+
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
     public void loadPreview()
     {
         Bundle bundle = new Bundle();
@@ -278,15 +294,16 @@ public class PicsFragment extends Fragment {
         bundle.putString("korg",organisation);
         bundle.putString("kcont",contributor);
         bundle.putString("kins",insurance);
-
+        bundle.putString("profpic",profpic);
+        bundle.putString("idfront",idfront);
+        bundle.putString("idback",idback);
 
         FragmentTransaction ft=getFragmentManager().beginTransaction();
-        PreviewFragment pf=new PreviewFragment();
-        pf.setArguments(bundle);
-        ft.replace(R.id.RegistrationContainer,pf);
+        PreviewFragment pF=new PreviewFragment();
+        pF.setArguments(bundle);
+        ft.replace(R.id.RegistrationContainer,pF);
         ft.addToBackStack(null);
         ft.commit();
-
     }
 
 

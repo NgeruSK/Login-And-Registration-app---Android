@@ -66,8 +66,8 @@ public class SpinnersFragment extends Fragment {
                 country=spCountries.getSelectedItem().toString();
                 gender=spGender.getSelectedItem().toString();
                 organisation=spOrganisations.getSelectedItem().toString();
-                contributor="Sample";
-                //contributor=spCountries.getSelectedItem().toString();
+               // contributor="Sample";
+                contributor=spContributors.getSelectedItem().toString();
                 insurance=spInsurance.getSelectedItem().toString();
 
 

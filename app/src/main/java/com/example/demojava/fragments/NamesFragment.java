@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.demojava.R;
 import com.example.demojava.activities.RegisterActivity;
@@ -58,26 +60,29 @@ public class NamesFragment extends Fragment {
         btnNextItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                surname=et_sname.getText().toString().trim();
-                othername=et_onames.getText().toString().trim();
-                idno=et_id.getText().toString().trim();
-                dob=etCal.getText().toString().trim();
+                surname = et_sname.getText().toString().trim();
+                othername = et_onames.getText().toString().trim();
+                idno = et_id.getText().toString().trim();
+                dob = etCal.getText().toString().trim();
 
+                if (TextUtils.isEmpty(surname) || TextUtils.isEmpty(othername) || TextUtils.isEmpty(idno) || TextUtils.isEmpty(dob)) {
+                    Toast.makeText(getContext(),"Fill all fields prior to progressing",Toast.LENGTH_LONG).show();
+                } else {
                /* int id=Integer.valueOf(et_id.getText().toString());
                 dbh.insert_countries(id,surname);*/
-               Bundle bundle = new Bundle();
-               bundle.putString("ksurname",surname);
-               bundle.putString("konames",othername);
-               bundle.putString("kid",idno);
-               bundle.putString("kdob",dob);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ksurname", surname);
+                    bundle.putString("konames", othername);
+                    bundle.putString("kid", idno);
+                    bundle.putString("kdob", dob);
 
-
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
-                SpinnersFragment Sf = new SpinnersFragment();
-                Sf.setArguments(bundle);
-                ft.replace(R.id.RegistrationContainer,Sf);
-                ft.addToBackStack(null);
-                ft.commit();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    SpinnersFragment sF = new SpinnersFragment();
+                    sF.setArguments(bundle);
+                    ft.replace(R.id.RegistrationContainer, sF);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 
@@ -105,5 +110,6 @@ public class NamesFragment extends Fragment {
         return  view;
       //  return inflater.inflate(R.layout.fragment_names, container, false);
     }
+
 
 }
