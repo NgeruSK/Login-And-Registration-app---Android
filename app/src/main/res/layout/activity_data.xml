@@ -4,13 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context=".activities.DataActivity">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    >
 
 
+    <ImageButton
+        android:id="@+id/btn_img_reg"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/bgn_reg"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/tvReg"
+        android:layout_below="@id/btn_img_reg"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:text="Register"
+        />
+    <ImageButton
+        android:layout_below="@id/tvReg"
+        android:id="@+id/btn_img_all"
+        android:layout_marginTop="30dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/bgn_view"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/btn"
+        android:layout_below="@id/btn_img_all"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:text="View All"
+        />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:text="Button" />
+<!--
     <GridView
+        android:layout_below="@id/button"
         android:id="@+id/indexGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="1"
-        android:padding="14dp" />
+        android:padding="14dp" >
+
+    </GridView>
+-->
+</RelativeLayout>
+
 </RelativeLayout>

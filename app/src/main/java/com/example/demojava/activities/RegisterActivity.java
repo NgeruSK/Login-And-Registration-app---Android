@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,18 +23,37 @@ import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity  {
 
-
-
+    public static String currentFrag=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         NamesFragment names = new NamesFragment();
         ft.replace(R.id.RegistrationContainer,names);
         ft.commit();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        displayPrev(currentFrag);
+    }
+    public void displayPrev(String currFrag)
+    {
+        if(currFrag=="NamesFrag"){
+                backHome();
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+    public void backHome()
+    {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
 }

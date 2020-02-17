@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.demojava.R;
+import com.example.demojava.activities.RegisterActivity;
 import com.example.demojava.databases.DatabaseHelper;
 
 import java.io.ByteArrayOutputStream;
@@ -74,6 +75,7 @@ public class PicsFragment extends Fragment {
         // Inflate the layout for this fragment
      //  checkPermission();
         View view=inflater.inflate(R.layout.fragment_pics, container, false);
+        RegisterActivity.currentFrag="PicsFrag";
         final String Accperms[]={CAMERA};
 
         myDb=new DatabaseHelper(getContext());
@@ -210,7 +212,7 @@ public class PicsFragment extends Fragment {
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent, 300);
+        getActivity().startActivityForResult(intent, 300);
     }
 
     @Override

@@ -4,5 +4,5 @@
     <item
         android:drawable="@drawable/login"
         android:width="30dp"
-        android:height="35dp"/>
+        android:height="30dp"/>
 </layer-list>

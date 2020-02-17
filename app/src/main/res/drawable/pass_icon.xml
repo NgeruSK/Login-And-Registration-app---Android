@@ -4,7 +4,7 @@
     <item
         android:drawable="@drawable/pass"
         android:width="30dp"
-        android:height="35dp"
+        android:height="30dp"
 
         />
 </layer-list>

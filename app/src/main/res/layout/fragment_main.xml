@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/login_gradient"
+    android:background="@drawable/bggb"
     tools:context=".fragments.MainFrag">
 
-    <!-- TODO: Update blank fragment layout
+            <!-- TODO: Update blank fragment layout
     <TextView
     android:id="@+id/loginscrn"
     android:layout_width="match_parent"
@@ -20,159 +20,131 @@
     android:textStyle="bold"
     />
      -->
-
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_marginTop="50dp"
-        android:layout_width="175dp"
-        android:layout_height="117dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ilog3" />
-    <EditText
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/imgLogo"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:hint="Enter Email"
-        android:textAllCaps="false"
-        android:id="@+id/etUName"
-        android:layout_centerHorizontal="true"
-        android:drawableLeft="@drawable/mail_icon"
-        android:paddingLeft="10dp"
-        android:drawablePadding="10dp"
-        android:background="@drawable/edit_round"
-
-        />
-
-        <EditText
-            android:layout_marginTop="40dp"
-            android:layout_below="@+id/etUName"
-            android:hint="Password"
-            android:textAllCaps="false"
-            android:inputType="textPassword"
-            android:layout_centerHorizontal="true"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:drawableLeft="@drawable/pass_icon"
-            android:paddingLeft="10dp"
-            android:drawablePadding="10dp"
-            android:id="@+id/etPassword"
-            android:background="@drawable/edit_round"
-            />
-<LinearLayout
-    android:layout_marginTop="30dp"
-    android:id="@+id/layout_checkBox"
-    android:layout_below="@+id/etPassword"
-    android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="wrap_content">
-
-    <CheckBox
-        android:id="@+id/rememberMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="#4EEC14"
-        />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Remember Me"
-    android:textColor="#12D63D"
-    />
-
-</LinearLayout>
-    <Button
-        android:layout_marginTop="200dp"
-        android:id="@+id/btnLogin"
-        android:layout_below="@+id/etPassword"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:textAllCaps="false"
-        android:drawableLeft="@drawable/login_icon"
-        android:paddingLeft="20dp"
-        android:background="@drawable/button_round"
-        android:textAlignment="center"
-        android:text="LOGIN" />
-
-    <TextView
-        android:layout_marginTop="15dp"
-        android:gravity="center"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtNew"
-        android:textColor="#0B82E0"
-        android:clickable="true"
-        android:text="Forgot Password?"
-        android:layout_below="@id/layout_checkBox"
-        />
+        android:layout_centerInParent="true"
+        android:id="@+id/lay1">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_below="@id/btnLogin"
-    android:layout_marginTop="100dp"
-    android:id="@+id/layout_reg"
-    android:gravity="center"
-    android:layout_centerHorizontal="true"
-    >
-    <TextView
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="175dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ilog3" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtRegEntry"
-        android:textColor="#0B82E0"
-        android:layout_centerHorizontal="true"
-        android:text="Don't have an Account? "
-        android:layout_below="@id/btnLogin"
-        />
-    <TextView
+            <EditText
+                android:id="@+id/etUName"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/imgLogo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/edit_round"
+                android:drawableLeft="@drawable/mail_icon"
+                android:drawablePadding="10dp"
+                android:hint="Username"
+                android:paddingLeft="10dp"
+                android:textAllCaps="false"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtReg"
-        android:textColor="#A3082C"
-        android:clickable="true"
-        android:layout_centerHorizontal="true"
-        android:text=" Register"
+                />
 
-        />
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/etUName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/edit_round"
+                android:drawableLeft="@drawable/pass_icon"
+                android:drawablePadding="10dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textAllCaps="false" />
 
-</LinearLayout>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_below="@id/layout_reg"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="10dp"
-    android:orientation="horizontal"
-    android:gravity="bottom"
+            <LinearLayout
+                android:id="@+id/layout_checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etPassword"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
 
-    >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_capture_logo"
+                <CheckBox
+                    android:id="@+id/rememberMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#4EEC14" />
 
-        />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember Me"
+                    android:textColor="#12D63D" />
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Powered By Capture Solutions "
-    android:textSize="16dp"
-    android:textColor="#ffffff"
-    />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text= "\u00a9"
-        android:textSize="16dp"
-        android:textColor="#ffffff"
-        />
-</LinearLayout>
-    <!--
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/layout_checkBox"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/login_icon"
+                android:paddingLeft="20dp"
+                android:textStyle="bold"
+                android:text="LOGIN"
+                android:textAlignment="center"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/txtNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_checkBox"
+                android:layout_marginTop="15dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="Forgot Password?"
+                android:textColor="#0B82E0" />
+
+
+    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/lay1"
+                android:layout_centerHorizontal="true"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_capture_logo"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Powered By Capture Solutions "
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u00a9"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+            </LinearLayout>
+         <!--
         <Button
             android:layout_marginTop="15dp"
             android:id="@+id/btnRegister"

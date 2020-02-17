@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.demojava.R;
+import com.example.demojava.activities.RegisterActivity;
 import com.example.demojava.databases.DatabaseHelper;
 import com.example.demojava.models.dynamic_property;
 
@@ -40,12 +42,14 @@ public class SpinnersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_spinners, container, false);
+        RegisterActivity.currentFrag="SpinnersFrag";
         spCountries=view.findViewById(R.id.sp_country);
         spGender=view.findViewById(R.id.sp_gender);
         spOrganisations=view.findViewById(R.id.sp_organisation);
         spContributors=view.findViewById(R.id.sp_contributor);
         spInsurance=view.findViewById(R.id.sp_insurance);
         btnNextSp=view.findViewById(R.id.btnNextSp);
+
 
         Bundle bundle=getArguments();
         surname=bundle.getString("ksurname");
@@ -63,31 +67,37 @@ public class SpinnersFragment extends Fragment {
         btnNextSp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                country=spCountries.getSelectedItem().toString();
-                gender=spGender.getSelectedItem().toString();
-                organisation=spOrganisations.getSelectedItem().toString();
-               // contributor="Sample";
-                contributor=spContributors.getSelectedItem().toString();
-                insurance=spInsurance.getSelectedItem().toString();
+                try{
+                    country=spCountries.getSelectedItem().toString();
+                    gender=spGender.getSelectedItem().toString();
+                    organisation=spOrganisations.getSelectedItem().toString();
+                    // contributor="Sample";
+                    contributor=spContributors.getSelectedItem().toString();
+                    insurance=spInsurance.getSelectedItem().toString();
 
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ksurname",surname);
+                    bundle.putString("konames",othername);
+                    bundle.putString("kid",idno);
+                    bundle.putString("kdob",dob);
+                    bundle.putString("kcountry",country);
+                    bundle.putString("kgender",gender);
+                    bundle.putString("korg",organisation);
+                    bundle.putString("kcont",contributor);
+                    bundle.putString("kins",insurance);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("ksurname",surname);
-                bundle.putString("konames",othername);
-                bundle.putString("kid",idno);
-                bundle.putString("kdob",dob);
-                bundle.putString("kcountry",country);
-                bundle.putString("kgender",gender);
-                bundle.putString("korg",organisation);
-                bundle.putString("kcont",contributor);
-                bundle.putString("kins",insurance);
-
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
-                PicsFragment pF = new PicsFragment();
-                pF.setArguments(bundle);
-                ft.replace(R.id.RegistrationContainer,pF);
-                ft.addToBackStack(null);
-                ft.commit();
+                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                    PicsFragment pF = new PicsFragment();
+                    pF.setArguments(bundle);
+                    ft.replace(R.id.RegistrationContainer,pF);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+       catch (Exception e)
+       {
+           Toast.makeText(getContext(),"Failed to load spinner data, Sync data first",Toast.LENGTH_SHORT).show();
+           e.printStackTrace();
+       }
             }
         });
 

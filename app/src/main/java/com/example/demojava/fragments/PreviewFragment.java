@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demojava.R;
+import com.example.demojava.activities.RegisterActivity;
 import com.example.demojava.databases.DatabaseHelper;
 
 /**
@@ -42,7 +43,7 @@ public class PreviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_preview, container, false);
-
+        RegisterActivity.currentFrag="PreviewFrag";
         etSurname=view.findViewById(R.id.tvSurname);
         etONames=view.findViewById(R.id.tvOthernames);
         etIdNo=view.findViewById(R.id.tvIdNo);
@@ -91,7 +92,7 @@ public class PreviewFragment extends Fragment {
 
             if(dbHelper.insert_users(surname,othername,idno,dob,gender,country,organisation,contributor,insurance,profpic,idfront,idback))
             {
-                Toast.makeText(getContext(),"User Added Successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Member Added Successfully",Toast.LENGTH_LONG).show();
 
                 FragmentTransaction ft=getFragmentManager().beginTransaction();
                 NamesFragment nF=new NamesFragment();

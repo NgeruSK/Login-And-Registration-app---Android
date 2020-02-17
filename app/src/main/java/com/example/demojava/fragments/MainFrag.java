@@ -34,6 +34,7 @@ import android.widget.Toolbar;
 
 import com.example.demojava.activities.DataActivity;
 import com.example.demojava.activities.RegisterActivity;
+import com.example.demojava.activities.SyncService;
 import com.example.demojava.databases.DatabaseHandler;
 import com.example.demojava.databases.DatabaseHandler2;
 import com.example.demojava.R;
@@ -63,13 +64,12 @@ public class MainFrag extends Fragment {
     Button _btnRegister;
     Button _btnLogin;
     TextView _txtViewAll;
-    TextView _txtRegister;
     EditText _etPassword;
     EditText _etUsername;
     CheckBox _rememberMe;
     Boolean chkd;
     static TextView _txtNew;
-    static String _userName;
+    public static String _userName;
     static String _password;
     static DatabaseHandler _myDb;
     static DatabaseHandler2 _myDb2;
@@ -92,7 +92,6 @@ public class MainFrag extends Fragment {
         StrictMode.setThreadPolicy(policy);
         View view=inflater.inflate(R.layout.fragment_main,container,false);
        // checkPermission();
-        _txtRegister=view.findViewById(R.id.txtReg);
         _btnLogin=view.findViewById(R.id.btnLogin);
         _etPassword=view.findViewById(R.id.etPassword);
         _etUsername=view.findViewById(R.id.etUName);
@@ -112,19 +111,6 @@ public class MainFrag extends Fragment {
             Toast.makeText(getContext(),"Login to use the app",Toast.LENGTH_SHORT).show();
         }
 
-        _txtRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), RegisterActivity.class);
-                startActivity(intent);
-              /* FragmentTransaction ft=getFragmentManager().beginTransaction();
-               RegisterFrag Rf = new RegisterFrag();
-               ft.replace(R.id.fragmentContainer,Rf);
-               ft.addToBackStack(null);
-               ft.commit();*/
-            }
-        });
         _btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,8 +171,8 @@ public class MainFrag extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-           // super.onPostExecute(aVoid);
+        protected void onPostExecute(Void result) {
+            //super.onPostExecute(aVoid);
             pD.dismiss();
         }
 
@@ -238,7 +224,7 @@ public class MainFrag extends Fragment {
                     Log.d("response error", line.toString());
                 }
                String token= urlConnection.getHeaderField("authorization");
-                Log.d("token", token);*/
+                Log.d("token", token); */
 _btnLogin.post(new Runnable() {
     @Override
     public void run() {
@@ -276,14 +262,15 @@ catch (Exception e)
 
                 if(status)
                 {
+                    indexActivity();
+                    pD.setMessage("Successfully Logged In");
                     JSONObject respData=resp.getJSONObject("Result");
                     Integer _id=respData.getInt("user_id");
                     String _fname=respData.getString("full_name");
                     String _pass = respData.getString("password");
                     String _uname=respData.getString("username");
                     Log.e("login_call_back ....>", "" + response);
-                    pD.setMessage("Successfully Logged In");
-                    indexActivity();
+                    //indexActivity();
                     _myDb2.insertData(_id,_fname,_uname,_pass);
                     checkRemember();
                 }
@@ -309,6 +296,7 @@ catch (Exception e)
                     urlConnection.disconnect();
                 }
             }
+
 
             return null;
         }

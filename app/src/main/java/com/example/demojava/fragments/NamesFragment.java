@@ -29,9 +29,7 @@ import java.util.Date;
  */
 public class NamesFragment extends Fragment {
 
-    EditText et_sname;
-    EditText et_onames;
-    EditText et_id;
+    EditText et_sname, et_onames, et_id;
     TextView etCal;
     Button btnNextItem;
     Calendar cal;
@@ -50,12 +48,36 @@ public class NamesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_names, container, false);
+        RegisterActivity.currentFrag="NamesFrag";
         btnNextItem=view.findViewById(R.id.btnNextInit);
         et_sname=view.findViewById(R.id.etSurname);
         et_onames=view.findViewById(R.id.etOtherNames);
         et_id=view.findViewById(R.id.etId);
         etCal=view.findViewById(R.id.etCalendar);
         dbh=new DatabaseHelper(getContext());
+
+        et_id.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                {
+                    if (et_id.getText().toString().trim().length() < 6){
+                        et_id.setError("Input expects atleast 6 characters");
+                    }
+                    else {
+                        et_id.setError(null);
+                    }
+                }
+                else {
+                    if (et_id.getText().toString().trim().length() < 6) {
+                        et_id.setError("Input expects atleast 6 characters");
+                    }
+                    else {
+                        et_id.setError(null);
+                    }
+                }
+            }
+        });
 
         btnNextItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +90,12 @@ public class NamesFragment extends Fragment {
                 if (TextUtils.isEmpty(surname) || TextUtils.isEmpty(othername) || TextUtils.isEmpty(idno) || TextUtils.isEmpty(dob)) {
                     Toast.makeText(getContext(),"Fill all fields prior to progressing",Toast.LENGTH_LONG).show();
                 } else {
+                    if(et_id.getText().toString().trim().length()<6)
+                    {
+                        Toast.makeText(getContext(),"Id No value should not be less than 6 characters long",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
                /* int id=Integer.valueOf(et_id.getText().toString());
                 dbh.insert_countries(id,surname);*/
                     Bundle bundle = new Bundle();
@@ -84,6 +112,7 @@ public class NamesFragment extends Fragment {
                     ft.commit();
                 }
             }
+            }
         });
 
         etCal.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +126,13 @@ public class NamesFragment extends Fragment {
                 int year=cal.get(Calendar.YEAR);
 
                 dp=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         etCal.setText(mDay + " /" + (mMonth+1) + "/" + mYear);
                     }
                 }, day, month,year);
+                dp.getDatePicker().setMaxDate(cal.getTimeInMillis());
                 dp.show();
                 // Toast.makeText(getBaseContext(),"Yoo",Toast.LENGTH_SHORT).show();
             }
@@ -110,6 +141,5 @@ public class NamesFragment extends Fragment {
         return  view;
       //  return inflater.inflate(R.layout.fragment_names, container, false);
     }
-
 
 }
